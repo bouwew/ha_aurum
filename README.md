@@ -57,7 +57,7 @@ There are in total 23 sensors available:
 Install the custom_component manually or via HACS: add this repository as a custom repository.
 
 After the files have been installed in HA Core, restart HA Core. After the restart, go to Configuration --> Integrations and press the "+" button.
-Enter "Aurum" into the search-bar, select the found Aurum-component. 
+Enter "Aurum" into the search-bar, select the found Aurum-beta-component. 
 Next, enter in the pop-up windows the IP-address of the Meetstekker and the numbers of the sensors you want to add:
 
 Look at http://'ip-address-of-the-Aurum-unit'/measurements/output.xml to find out which sensors show actual values. Then modify the numbers during configuration: enter for instance: 16,17,18,20,23
