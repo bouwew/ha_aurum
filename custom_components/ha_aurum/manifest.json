@@ -2,7 +2,7 @@
     "domain": "ha_aurum",
     "name": "Aurum",
     "documentation": "https://github.com/bouwew/ha_aurum",
-    "requirements": ["https://test-files.pythonhosted.org/packages/60/fc/4e247f751278318e00fef9edcd0ecfd80a3ba577e3d5660de558bd0eca5d/py_aurum-0.1.17.tar.gz#py-aurum==0.1.17"],
+    "requirements": ["py-aurum==1.0.0"],
     "codeowners": ["@bouwew"],
     "config_flow": true
 }
