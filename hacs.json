@@ -1,0 +1,6 @@
+{
+  "name": "Aurum beta custom component",
+  "domains": ["sensor"],
+  "homeassistant": "0.110.0",
+  "render_readme": true
+}

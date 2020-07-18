@@ -1,0 +1,32 @@
+{
+  "options": {
+    "step": {
+      "init": {
+        "description": "Adjust Aurum Options",
+        "data": {
+          "scan_interval": "Scan Interval (seconds)"
+        }
+      }
+    }
+  },
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to the device",
+        "description": "IP address and sensor-list",
+        "data": {
+          "host": "Aurum IP address",
+          "selection" : "Input the required sensors"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect, please try again",
+      "unknown": "Unexpected error",
+      "invalid input": "Invalid input data provided, please try again"
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  }
+}
