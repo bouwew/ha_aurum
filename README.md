@@ -64,3 +64,7 @@ Look at http://'ip-address-of-the-Aurum-unit'/measurements/output.xml to find ou
 
 **NOTE: always use sensor 16.** 
 Also, the numbers cannot be mixed, they must be entered in ascending order.
+
+# Options
+
+The Aurum integration has an OPTIONS-button. It can be used to change the default data-refresh-interval (= 10 secs).
