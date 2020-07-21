@@ -24,8 +24,8 @@ async def validate_input(hass: core.HomeAssistant, data):
     Data has the keys from DATA_SCHEMA with values provided by the user.
     """
     websession = async_get_clientsession(hass, verify_ssl=False)
-    api = Aurum(host=data["host"], timeout=30, websession=websession)
-    sensor_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+    api = Aurum(host=data[CONF_HOST], timeout=30, websession=websession)
+    sensor_list = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 
     try:
         await api.connect()
@@ -38,7 +38,7 @@ async def validate_input(hass: core.HomeAssistant, data):
 
     return api, sensor_list
 
-
+@config_entries.HANDLERS.register(DOMAIN)
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Aurum."""
 
