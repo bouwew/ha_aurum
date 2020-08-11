@@ -15,7 +15,13 @@ from . import DEFAULT_SCAN_INTERVAL
 
 _LOGGER = logging.getLogger(__name__)
 
-DATA_SCHEMA = vol.Schema({vol.Required(CONF_HOST): str, vol.Required(CONF_SELECTION): str}, extra=vol.ALLOW_EXTRA)
+DATA_SCHEMA = vol.Schema(
+    {
+        vol.Required(CONF_HOST): str, 
+        vol.Required(CONF_SELECTION): str,
+        vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): cv.positive_int
+    }, extra=vol.ALLOW_EXTRA
+)
 
 async def validate_input(hass: core.HomeAssistant, data):
     """
@@ -70,35 +76,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=DATA_SCHEMA, errors=errors
         )
-
-    @staticmethod
-    @callback
-    def async_get_options_flow(config_entry):
-        """Get the options flow for this handler."""
-        return AurumOptionsFlowHandler(config_entry)
-
-
-class AurumOptionsFlowHandler(config_entries.OptionsFlow):
-    """Plugwise option flow."""
-    def __init__(self, config_entry):
-        """Initialize options flow."""
-        self.config_entry = config_entry
-
-    async def async_step_init(self, user_input=None):
-        """Manage the Plugwise options."""
-        if user_input is not None:
-            return self.async_create_entry(title="", data=user_input)
-
-        data = {
-            vol.Optional(
-                CONF_SCAN_INTERVAL, 
-                default=self.config_entry.options.get(
-                    CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
-                )
-            ): int
-        }
-
-        return self.async_show_form(step_id="init", data_schema=vol.Schema(data))
 
 
 class CannotConnect(exceptions.HomeAssistantError):
