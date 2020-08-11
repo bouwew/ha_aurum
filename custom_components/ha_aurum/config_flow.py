@@ -5,7 +5,7 @@ from typing import Any, Dict
 import voluptuous as vol
 
 from homeassistant import config_entries, core, exceptions
-from homeassistant.const import CONF_HOST, CONF_SCAN_INTERVAL
+from homeassistant.const import CONF_BASE, CONF_HOST, CONF_SCAN_INTERVAL
 from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from py_aurum import Aurum
@@ -29,7 +29,7 @@ async def validate_input(hass: core.HomeAssistant, data):
 
     try:
         await api.connect()
-        if data["selection"] is not None:
+        if data[CONF_SELECTION] is not None:
             sensor_list = [int(s) for s in data["selection"].split(',')]
     except Aurum.AurumError:
         raise CannotConnect
@@ -60,12 +60,12 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                 return self.async_create_entry(title="Aurum", data=user_input)
             except CannotConnect:
-                errors["base"] = "cannot_connect"
+                errors[CONF_BASE] = "cannot_connect"
             except Exception:  # pylint: disable=broad-except
                 _LOGGER.exception("Unexpected exception")
-                errors["base"] = "unknown"
+                errors[CONF_BASE] = "unknown"
             except InvalidInput:
-                errors["base"] = "invalid input data provided"
+                errors[CONF_BASE] = "invalid input data provided"
 
         return self.async_show_form(
             step_id="user", data_schema=DATA_SCHEMA, errors=errors
