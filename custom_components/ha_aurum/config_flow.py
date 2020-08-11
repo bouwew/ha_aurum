@@ -10,7 +10,7 @@ from homeassistant.core import callback
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from py_aurum import Aurum
 
-from .const import DOMAIN, CONF_SELECTION, ATTR_MAC  # pylint:disable=unused-import
+from .const import DOMAIN, CONF_SELECTION  # pylint:disable=unused-import
 from . import DEFAULT_SCAN_INTERVAL
 
 _LOGGER = logging.getLogger(__name__)
@@ -51,6 +51,10 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
 
+            for entry in self._async_current_entries():
+                if entry.data.get(CONF_HOST) == user_input[CONF_HOST]:
+                    return self.async_abort(reason="already_configured")
+
             try:
                 api, sensor_list = await validate_input(self.hass, user_input)
 
@@ -62,12 +66,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 errors["base"] = "unknown"
             except InvalidInput:
                 errors["base"] = "invalid input data provided"
-
-            if not errors:
-                await self.async_set_unique_id(ATTR_MAC)
-                self._abort_if_unique_id_configured()
-
-                return self.async_create_entry(title="Aurum", data=user_input)
 
         return self.async_show_form(
             step_id="user", data_schema=DATA_SCHEMA, errors=errors
