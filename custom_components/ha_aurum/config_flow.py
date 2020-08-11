@@ -7,6 +7,7 @@ import voluptuous as vol
 from homeassistant import config_entries, core, exceptions
 from homeassistant.const import CONF_BASE, CONF_HOST, CONF_SCAN_INTERVAL
 from homeassistant.core import callback
+from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from py_aurum import Aurum
 
@@ -19,9 +20,12 @@ DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST): str, 
         vol.Required(CONF_SELECTION): str,
-        vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): cv.positive_int
+        vol.Optional(
+            CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
+        ): cv.positive_int
     }, extra=vol.ALLOW_EXTRA
 )
+
 
 async def validate_input(hass: core.HomeAssistant, data):
     """

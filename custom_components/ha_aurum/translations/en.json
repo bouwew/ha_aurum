@@ -6,8 +6,8 @@
         "description": "IP address, ensor-list and refresh interval",
         "data": {
           "host": "Aurum IP address",
-          "selection" : "Sensor-list(comma-separated)"
-          CONF_SCAN_INTERVAL: "Refesh interval[s]"
+          "selection" : "Sensor-list(comma-separated)",
+          "scan_interval": "Refesh interval [s]"
         }
       }
     },
