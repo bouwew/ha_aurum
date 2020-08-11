@@ -16,7 +16,7 @@
         "description": "IP address and sensor-list",
         "data": {
           "host": "Aurum IP address",
-          "selection" : "Input the required sensors"
+          "selection" : "Sensor-list(comma-separated)"
         }
       }
     },
