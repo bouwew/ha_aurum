@@ -1,7 +1,9 @@
+API = "api"
 ATTR_MAC = "0014ABBA4100"
-
 CONF_SELECTION = "selection"
+COORDINATOR = "coordinator"
 DOMAIN = "ha_aurum"
+SENSOR_LIST = "sensor_list"
 
 # Sensor mapping
 SENSOR_MAP_MODEL = 0
