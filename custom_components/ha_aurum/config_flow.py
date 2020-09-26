@@ -20,9 +20,6 @@ DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST): str, 
         vol.Required(CONF_SELECTION): str,
-        #vol.Optional(
-        #    CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
-        #): cv.positive_int
     }, extra=vol.ALLOW_EXTRA
 )
 
