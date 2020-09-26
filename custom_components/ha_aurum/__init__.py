@@ -15,9 +15,20 @@ from homeassistant.exceptions import ConfigEntryNotReady
 from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.entity import Entity
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
+from homeassistant.helpers.update_coordinator import (
+    CoordinatorEntity,
+    DataUpdateCoordinator,
+    UpdateFailed,
+)
 
-from .const import ATTR_MAC, CONF_SELECTION, DOMAIN
+from .const import (
+    API,
+    ATTR_MAC,
+    CONF_SELECTION,
+    COORDINATOR,
+    DOMAIN,
+    SENSOR_LIST,
+)
 
 CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema({})}, extra=vol.ALLOW_EXTRA)
 
@@ -84,9 +95,9 @@ async def async_setup_entry(hass, entry):
         raise ConfigEntryNotReady
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
-        "api": api,
-        "coordinator": coordinator,
-        "sensor_list" : sensor_list
+        API: api,
+        COORDINATOR: coordinator,
+        SENSOR_LIST : sensor_list
     }
 
     device_registry = await dr.async_get_registry(hass)
@@ -130,13 +141,14 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry):
     return unload_ok
 
 
-class AurumBase(Entity):
+class AurumBase(CoordinatorEntity):
     """Represent Aurum Base."""
 
     def __init__(self, api, coordinator, name):
         """Initialise the gateway."""
+        super().__init__(coordinator)
+
         self._api = api
-        self._coordinator = coordinator
         self._name = name
 
         self._unique_id = None
@@ -147,16 +159,6 @@ class AurumBase(Entity):
     def unique_id(self):
         """Return a unique ID."""
         return self._unique_id
-
-    @property
-    def should_poll(self):
-        """Return False, updates are controlled via coordinator."""
-        return False
-
-    @property
-    def available(self):
-        """Return True if entity is available."""
-        return self._coordinator.last_update_success
 
     @property
     def name(self):
@@ -179,7 +181,7 @@ class AurumBase(Entity):
         """Subscribe to updates."""
         self._async_process_data()
         self.async_on_remove(
-            self._coordinator.async_add_listener(self._async_process_data)
+            self.coordinator.async_add_listener(self._async_process_data)
         )
 
     @callback
@@ -187,6 +189,3 @@ class AurumBase(Entity):
         """Interpret and process API data."""
         raise NotImplementedError
 
-    async def async_update(self):
-        """Update the entity."""
-        await self._coordinator.async_request_refresh()
