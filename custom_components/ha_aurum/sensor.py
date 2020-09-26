@@ -15,8 +15,11 @@ from homeassistant.helpers.entity import Entity
 from . import AurumBase
 
 from .const import (
+    API,
     ATTR_MAC,
+    COORDINATOR,
     DOMAIN,
+    SENSOR_LIST,
     SENSOR_MAP_DEVICE_CLASS,
     SENSOR_MAP_MODEL,
     SENSOR_MAP_UOM,
@@ -63,9 +66,9 @@ CUSTOM_ICONS = {
 async def async_setup_entry(hass, config_entry, async_add_entities):
     """Set up the Aurum Meetstekker from a config entry."""
     _LOGGER.debug("Aurum hass data %s", hass.data[DOMAIN])
-    api = hass.data[DOMAIN][config_entry.entry_id]["api"]
-    coordinator = hass.data[DOMAIN][config_entry.entry_id]["coordinator"]
-    sensor_list = hass.data[DOMAIN][config_entry.entry_id]["sensor_list"]
+    api = hass.data[DOMAIN][config_entry.entry_id][API]
+    coordinator = hass.data[DOMAIN][config_entry.entry_id][COORDINATOR]
+    sensor_list = hass.data[DOMAIN][config_entry.entry_id][SENSOR_LIST]
 
     _LOGGER.debug("Aurum sensor")
 
