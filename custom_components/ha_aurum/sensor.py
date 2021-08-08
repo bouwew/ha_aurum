@@ -3,6 +3,7 @@
 import logging
 
 from homeassistant.const import (
+    DEVICE_CLASS_ENERGY,
     DEVICE_CLASS_POWER,
     ENERGY_KILO_WATT_HOUR,
     ENERGY_WATT_HOUR,
@@ -10,7 +11,8 @@ from homeassistant.const import (
     VOLUME_CUBIC_METERS,
 )
 from homeassistant.core import callback
-from homeassistant.helpers.entity import Entity
+from homeassistant.components.sensor import SensorEntity, STATE_CLASS_MEASUREMENT
+from homeassistant.util import dt as dt_util
 
 from . import AurumBase
 
@@ -21,7 +23,9 @@ from .const import (
     DOMAIN,
     SENSOR_LIST,
     SENSOR_MAP_DEVICE_CLASS,
+    SENSOR_MAP_LAST_RESET,
     SENSOR_MAP_MODEL,
+    SENSOR_MAP_STATE_CLASS,
     SENSOR_MAP_UOM,
 )
 
@@ -31,29 +35,29 @@ _LOGGER = logging.getLogger(__name__)
 
 SENSOR_PREFIX = 'Aurum'
 SENSOR_TYPES = {
-    'powerBattery': ['Inverter Power', POWER_WATT, DEVICE_CLASS_POWER],
-    'counterOutBattery': ['Cumulative Inverter Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterInBattery': ['Cumulative Inverter Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'powerMCHP': ['MCHP Power', POWER_WATT, DEVICE_CLASS_POWER],
-    'counterOutMCHP': ['Cumulative MCHP Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterInMCHP': ['Cumulative MCHP Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'powerSolar': ['Solar Power', POWER_WATT, DEVICE_CLASS_POWER],
-    'counterOutSolar': ['Cumulative Solar Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterInSolar': ['Cumulative Solar Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'powerEV': ['EV Power', POWER_WATT, DEVICE_CLASS_POWER],
-    'counterOutEV': ['Cumulative EV Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterInEV': ['Cumulative EV Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'powerMain': ['Grid Power', POWER_WATT, DEVICE_CLASS_POWER],
-    'counterOutMain': ['Cumulative Grid Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterInMain': ['Cumulative Grid Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'smartMeterTimestamp': ['Smartmeter Timestamp', None, None],
-    'powerElectricity': ['Grid Power', POWER_WATT, DEVICE_CLASS_POWER],
-    'counterElectricityInLow': ['Cumulative Grid Power In Low', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterElectricityOutLow': ['Cumulative Grid Power Out Low', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterElectricityInHigh': ['Cumulative Grid Power In High', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'counterElectricityOutHigh': ['Cumulative Grid Power Out High', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_POWER],
-    'rateGas': ['Gas Rate','m3/h', None],
-    'counterGas': ['Cumulative Consumed Gas', VOLUME_CUBIC_METERS, None],
+    'powerBattery': ['Inverter Power', POWER_WATT, DEVICE_CLASS_POWER, STATE_CLASS_MEASUREMENT, None],
+    'counterOutBattery': ['Cumulative Inverter Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterInBattery': ['Cumulative Inverter Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'powerMCHP': ['MCHP Power', POWER_WATT, DEVICE_CLASS_POWER, STATE_CLASS_MEASUREMENT, None],
+    'counterOutMCHP': ['Cumulative MCHP Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterInMCHP': ['Cumulative MCHP Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'powerSolar': ['Solar Power', POWER_WATT, DEVICE_CLASS_POWER, STATE_CLASS_MEASUREMENT, None],
+    'counterOutSolar': ['Cumulative Solar Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterInSolar': ['Cumulative Solar Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'powerEV': ['EV Power', POWER_WATT, DEVICE_CLASS_POWER, STATE_CLASS_MEASUREMENT, None],
+    'counterOutEV': ['Cumulative EV Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterInEV': ['Cumulative EV Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'powerMain': ['Grid Power', POWER_WATT, DEVICE_CLASS_POWER, STATE_CLASS_MEASUREMENT, None],
+    'counterOutMain': ['Cumulative Grid Power Out', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterInMain': ['Cumulative Grid Power In', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'smartMeterTimestamp': ['Smartmeter Timestamp', None, None, None, None],
+    'powerElectricity': ['Net Energy', POWER_WATT, DEVICE_CLASS_POWER, STATE_CLASS_MEASUREMENT, None],
+    'counterElectricityInLow': ['Cumulative Off Peak Consumed Energy', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterElectricityOutLow': ['Cumulative Off Peak Produced Energy', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterElectricityInHigh': ['Cumulative Peak Consumed Energy', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'counterElectricityOutHigh': ['Cumulative Peak Produced Energy', ENERGY_KILO_WATT_HOUR, DEVICE_CLASS_ENERGY, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
+    'rateGas': ['Gas Rate','m3/h', None, STATE_CLASS_MEASUREMENT, None],
+    'counterGas': ['Cumulative Consumed Gas', VOLUME_CUBIC_METERS, None, STATE_CLASS_MEASUREMENT, dt_util.utc_from_timestamp(0)],
 }
 
 CUSTOM_ICONS = {
@@ -142,13 +146,16 @@ class AurumSensor(AurumBase):
         return self._unit_of_measurement
 
 
-class AurumPowerSensor(AurumSensor, Entity):
+class AurumPowerSensor(AurumSensor, SensorEntity):
     """Power sensor devices."""
 
     def __init__(self, api, coordinator, name, sensor, sensor_type, sensor_list):
         """Set up the Aurum API."""
         super().__init__(api, coordinator, name, sensor, sensor_type)
 
+
+        self._attr_state_class = sensor_type[SENSOR_MAP_STATE_CLASS]
+        self._attr_last_reset = sensor_type[SENSOR_MAP_LAST_RESET]
         self._model = sensor_type[SENSOR_MAP_MODEL]
         self._unit_of_measurement = sensor_type[SENSOR_MAP_UOM]
         self._dev_class = sensor_type[SENSOR_MAP_DEVICE_CLASS]
