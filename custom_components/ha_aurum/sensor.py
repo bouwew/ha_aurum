@@ -83,7 +83,7 @@ SENSOR_TYPES = {
         'Solar Power',
         POWER_WATT,
         SensorDeviceClass.POWER,
-        STATE_CLASS_MEASUREMENT,
+        SensorStateClass.MEASUREMENT,
         None
     ],
     'counterOutSolar': [
