@@ -171,7 +171,7 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterElectricityOutHigh': [
         'Cumulative Peak Produced Energy',
