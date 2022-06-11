@@ -49,14 +49,14 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterInBattery': [
         'Cumulative Inverter Power In',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'powerMCHP': [
         'MCHP Power',
@@ -70,14 +70,14 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterInMCHP': [
         'Cumulative MCHP Power Out',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'powerSolar': [
         'Solar Power',
@@ -91,14 +91,14 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterInSolar': [
         'Cumulative Solar Power In',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'powerEV': [
         'EV Power',
@@ -112,14 +112,14 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterInEV': [
         'Cumulative EV Power In',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'powerMain': [
         'Grid Power',
@@ -133,38 +133,38 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterInMain': [
         'Cumulative Grid Power In',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'smartMeterTimestamp': [
-        'Smartmeter Timestamp', None, None, None, None
+        'Smartmeter Timestamp', None, None, None, None,
     ],
     'powerElectricity': [
         'Net Energy',
         POWER_WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
-        None
+        None,
     ],
     'counterElectricityInLow': [
         'Cumulative Off Peak Consumed Energy',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterElectricityOutLow': [
         'Cumulative Off Peak Produced Energy',
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'counterElectricityInHigh': [
         'Cumulative Peak Consumed Energy',
@@ -178,12 +178,12 @@ SENSOR_TYPES = {
         ENERGY_KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
     'rateGas': [
         'Gas Rate',
         'm3/h',
-        SensorDeviceClass.GAS,
+        None,
         SensorStateClass.MEASUREMENT,
         None
     ],
@@ -192,7 +192,7 @@ SENSOR_TYPES = {
         VOLUME_CUBIC_METERS,
         SensorDeviceClass.GAS,
         SensorStateClass.TOTAL_INCREASING,
-        dt_util.utc_from_timestamp(0)
+        None,
     ],
 }
 
