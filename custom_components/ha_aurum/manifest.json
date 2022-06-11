@@ -1,7 +1,7 @@
 {
     "domain": "ha_aurum",
     "name": "Aurum",
-    "version": "1.4.0b0",
+    "version": "1.4.0b1",
     "documentation": "https://github.com/bouwew/ha_aurum",
     "requirements": ["py-aurum==1.0.0"],
     "codeowners": ["@bouwew"],
