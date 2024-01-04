@@ -182,7 +182,7 @@ SENSOR_TYPES = {
     ],
     'rateGas': [
         'Gas Rate',
-        UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR
+        UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR,
         None,
         SensorStateClass.MEASUREMENT,
         None
