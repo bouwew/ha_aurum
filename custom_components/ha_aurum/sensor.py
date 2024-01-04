@@ -3,10 +3,10 @@
 import logging
 
 from homeassistant.const import (
-    ENERGY_KILO_WATT_HOUR,
-    ENERGY_WATT_HOUR,
-    POWER_WATT,
-    VOLUME_CUBIC_METERS,
+    UnitOfEnergy,
+    UnitOfPower,
+    UnitOfVolume,
+    UnitOfVolumeFlowRate,
 )
 from homeassistant.core import callback
 from homeassistant.components.sensor import (
@@ -39,105 +39,105 @@ SENSOR_PREFIX = 'Aurum'
 SENSOR_TYPES = {
     'powerBattery': [
         'Inverter Power',
-        POWER_WATT,
+        UnitOfPower.WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
         None
     ],
     'counterOutBattery': [
         'Cumulative Inverter Power Out',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterInBattery': [
         'Cumulative Inverter Power In',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'powerMCHP': [
         'MCHP Power',
-        POWER_WATT,
+        UnitOfPower.WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
         None
     ],
     'counterOutMCHP': [
         'Cumulative MCHP Power Out',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterInMCHP': [
         'Cumulative MCHP Power Out',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'powerSolar': [
         'Solar Power',
-        POWER_WATT,
+        UnitOfPower.WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
         None
     ],
     'counterOutSolar': [
         'Cumulative Solar Power Out',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterInSolar': [
         'Cumulative Solar Power In',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'powerEV': [
         'EV Power',
-        POWER_WATT,
+        UnitOfPower.WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
         None
     ],
     'counterOutEV': [
         'Cumulative EV Power Out',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterInEV': [
         'Cumulative EV Power In',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'powerMain': [
         'Grid Power',
-        POWER_WATT,
+        UnitOfPower.WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
         None
     ],
     'counterOutMain': [
         'Cumulative Grid Power Out',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterInMain': [
         'Cumulative Grid Power In',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
@@ -147,49 +147,49 @@ SENSOR_TYPES = {
     ],
     'powerElectricity': [
         'Net Energy',
-        POWER_WATT,
+        UnitOfPower.WATT,
         SensorDeviceClass.POWER,
         SensorStateClass.MEASUREMENT,
         None,
     ],
     'counterElectricityInLow': [
         'Cumulative Off Peak Consumed Energy',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterElectricityOutLow': [
         'Cumulative Off Peak Produced Energy',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterElectricityInHigh': [
         'Cumulative Peak Consumed Energy',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'counterElectricityOutHigh': [
         'Cumulative Peak Produced Energy',
-        ENERGY_KILO_WATT_HOUR,
+        UnitOfEnergy.KILO_WATT_HOUR,
         SensorDeviceClass.ENERGY,
         SensorStateClass.TOTAL_INCREASING,
         None,
     ],
     'rateGas': [
         'Gas Rate',
-        'm3/h',
+        UnitOfVolumeFlowRate.CUBIC_METERS_PER_HOUR
         None,
         SensorStateClass.MEASUREMENT,
         None
     ],
     'counterGas': [
         'Cumulative Consumed Gas',
-        VOLUME_CUBIC_METERS,
+        UnitOfVolume.CUBIC_METERS,
         SensorDeviceClass.GAS,
         SensorStateClass.TOTAL_INCREASING,
         None,
